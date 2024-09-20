@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+
 
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
@@ -25,21 +27,16 @@ public class EnemyMover : MonoBehaviour
     {
         path.Clear();
 
-        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Path");
-        List<GameObject> sortedTiles = new List<GameObject>(tiles);
-        sortedTiles.Sort((a, b) => a.name.CompareTo(b.name));
+        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
 
-        foreach (GameObject tile in sortedTiles)
-        {
-            Waypoint waypoint = tile.GetComponent<Waypoint>();
-
-            if (waypoint != null)
-            {
-                path.Add(waypoint);
-            }
-
-        }
+        // Sort the waypoints based on their X coordinate for left-to-right movement
+        path = waypoints.Select(waypoint => waypoint.GetComponent<Waypoint>())
+                        .Where(waypoint => waypoint != null)
+                        .OrderBy(waypoint => waypoint.transform.position.x)
+                        .ThenBy(waypoint => waypoint.transform.position.z)
+                        .ToList();
     }
+
 
     void ReturnToStart()
     {
