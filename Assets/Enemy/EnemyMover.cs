@@ -7,7 +7,7 @@ using System.Linq;
 [RequireComponent(typeof(Enemy))]
 public class EnemyMover : MonoBehaviour
 {
-    [SerializeField] List<Waypoint> path = new List<Waypoint>();
+    [SerializeField] List<Tile> path = new List<Tile>();
     [SerializeField][Range(0f, 5f)] float speed = 1.2f;
     Enemy enemy;
 
@@ -27,13 +27,13 @@ public class EnemyMover : MonoBehaviour
     {
         path.Clear();
 
-        GameObject[] waypoints = GameObject.FindGameObjectsWithTag("Path");
+        GameObject[] tiles = GameObject.FindGameObjectsWithTag("Path");
 
         // Sort the waypoints based on their X coordinate for left-to-right movement
-        path = waypoints.Select(waypoint => waypoint.GetComponent<Waypoint>())
-                        .Where(waypoint => waypoint != null)
-                        .OrderBy(waypoint => waypoint.transform.position.x)
-                        .ThenBy(waypoint => waypoint.transform.position.z)
+        path = tiles.Select(Tile => Tile.GetComponent<Tile>())
+                        .Where(Tile => Tile != null)
+                        .OrderBy(Tile => Tile.transform.position.x)
+                        .ThenBy(Tile => Tile.transform.position.z)
                         .ToList();
     }
 
@@ -51,7 +51,7 @@ public class EnemyMover : MonoBehaviour
 
     IEnumerator FollowPath()
     {
-        foreach (Waypoint waypoint in path)
+        foreach (Tile waypoint in path)
         {
             Vector3 startPos = transform.position;
             Vector3 endPos = waypoint.transform.position;
