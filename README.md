@@ -1,5 +1,9 @@
 # Realm Rush Game
 
+
+https://github.com/user-attachments/assets/871666b7-b30d-43cd-9c34-df9047350ddb
+
+
 Welcome to the Realm Rush, a strategy-based game where players must defend their base from waves of enemies by placing towers strategically on a grid. 
 The goal is to prevent enemies from reaching the end of the path by eliminating them with defensive towers.
 
