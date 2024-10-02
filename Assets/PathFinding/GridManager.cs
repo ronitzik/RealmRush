@@ -42,8 +42,15 @@ public class GridManager : MonoBehaviour
     public Vector2Int GetCoordinatesFromPosition(Vector3 position)
     {
         Vector2Int coordinates = new Vector2Int();
+
+#if UNITY_EDITOR
         coordinates.x = Mathf.RoundToInt(position.x / UnityEditor.EditorSnapSettings.move.x);
         coordinates.y = Mathf.RoundToInt(position.z / UnityEditor.EditorSnapSettings.move.z);
+#else
+        
+        coordinates.x = Mathf.RoundToInt(position.x);
+        coordinates.y = Mathf.RoundToInt(position.z);
+#endif
 
         return coordinates;
     }
@@ -51,8 +58,15 @@ public class GridManager : MonoBehaviour
     public Vector3 GetPositionFromCoordinates(Vector2Int coordinates)
     {
         Vector3 position = new Vector3();
+
+#if UNITY_EDITOR
         position.x = coordinates.x * UnityEditor.EditorSnapSettings.move.x;
         position.z = coordinates.y * UnityEditor.EditorSnapSettings.move.z;
+#else
+        
+        position.x = coordinates.x;
+        position.z = coordinates.y;
+#endif
 
         return position;
     }
